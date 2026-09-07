@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Paper Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&family=Architects+Daughter&family=Kalam:wght@300;400;700&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="logic.js" defer></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4">
+  
+  <div class="relative w-full max-w-sm mx-auto" style="margin-top: 30px; margin-bottom: 30px;">
+    
+    <!-- Decorative tape pieces -->
+    <div class="absolute -top-3 left-8 w-24 h-7 tape rotate-[-6deg] z-20" aria-hidden="true"></div>
+    <div class="absolute -top-2 right-6 w-16 h-6 tape rotate-[5deg] z-20" aria-hidden="true"></div>
+    
+    <!-- Pencil doodles -->
+    <div class="absolute -bottom-4 -left-2 w-10 h-5 scribble-small" aria-hidden="true"></div>
+    <div class="absolute top-1/3 -right-1 doodle-arrow" aria-hidden="true"></div>
+    
+    <!-- Sketch annotations -->
+    <div class="sketch-annotation" style="top: -15px; left: -10px;">✎</div>
+    <div class="sketch-annotation" style="bottom: -15px; right: -5px;">📐</div>
+    
+    <!-- Margin notes -->
+    <div class="margin-note" style="left: -18px; top: 50%;" ✎>2+2=4</div>
+    <div class="margin-note" style="right: -12px; bottom: 40%;" aria-hidden="true">√9=3</div>
+    
+    <!-- Calculator Container -->
+    <main class="calculator-paper p-3 sm:p-4 pt-6 pb-4 relative" role="main" aria-label="Paper Calculator">
+      
+      <!-- Paper texture overlay -->
+      <div class="paper-texture" aria-hidden="true"></div>
+      
+      <!-- Pencil smudge -->
+      <div class="pencil-smudge" style="top: 30%; left: 60%; width: 60px; height: 40px;" aria-hidden="true"></div>
+      <div class="pencil-smudge" style="bottom: 20%; right: 15%; width: 45px; height: 30px;" aria-hidden="true"></div>
+      
+      <!-- Handwritten title -->
+      <div class="text-center mb-3 relative" style="z-index: 2;">
+        <h1 class="text-3xl sm:text-4xl font-bold text-[#4a3e2e] handwritten-note relative inline-block" 
+            style="text-decoration: underline wavy #b89a7a 2px; transform: rotate(-1.5deg);">
+          Paper Calculator
+          <span class="absolute -right-5 -top-2 text-base opacity-50" aria-hidden="true">✎</span>
+        </h1>
+        <p class="text-sm text-[#7a6b52] handwritten-note mt-1 relative" style="transform: rotate(1.5deg);">
+          ~ for solving your  problems ~
+          <span class="inline-block ml-1 opacity-40" aria-hidden="true">✧</span>
+        </p>
+      </div>
+      
+      <!-- Display Area - Fixed with proper padding and line-height -->
+      <div class="display-area mb-3 relative" role="status" aria-live="polite" style="z-index: 2;">
+        <div class="expression-text" id="expression" aria-label="Expression"></div>
+        <div class="display-text" id="display" aria-label="Display">0</div>
+      </div>
+      
+      <!-- Buttons Grid -->
+      <div class="grid grid-cols-4 gap-2 sm:gap-2.5 relative" role="group" aria-label="Calculator buttons" style="z-index: 2;">
+        
+        <button type="button" class="btn btn-clear rounded-xl text-lg sm:text-xl font-medium" 
+                id="btn-clear" style="--tilt: -0.8deg;" aria-label="Clear all">AC</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                id="btn-delete" style="--tilt: 0.4deg;" aria-label="Delete last digit">⌫</button>
+        <button type="button" class="btn btn-operator rounded-xl text-lg sm:text-xl font-medium" 
+                id="btn-percent" style="--tilt: -0.3deg;" aria-label="Percent">%</button>
+        <button type="button" class="btn btn-operator rounded-xl text-xl sm:text-2xl font-medium" 
+                id="btn-divide" style="--tilt: 0.6deg;" aria-label="Divide">÷</button>
+        
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="7" style="--tilt: 0.8deg;" aria-label="7">7</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="8" style="--tilt: -0.5deg;" aria-label="8">8</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="9" style="--tilt: 0.3deg;" aria-label="9">9</button>
+        <button type="button" class="btn btn-operator rounded-xl text-xl sm:text-2xl font-medium" 
+                id="btn-multiply" style="--tilt: -0.7deg;" aria-label="Multiply">×</button>
+        
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="4" style="--tilt: -0.4deg;" aria-label="4">4</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="5" style="--tilt: 0.6deg;" aria-label="5">5</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="6" style="--tilt: -0.8deg;" aria-label="6">6</button>
+        <button type="button" class="btn btn-operator rounded-xl text-xl sm:text-2xl font-medium" 
+                id="btn-subtract" style="--tilt: 0.5deg;" aria-label="Subtract">−</button>
+        
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="1" style="--tilt: 0.7deg;" aria-label="1">1</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="2" style="--tilt: -0.3deg;" aria-label="2">2</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="3" style="--tilt: 0.2deg;" aria-label="3">3</button>
+        <button type="button" class="btn btn-operator rounded-xl text-xl sm:text-2xl font-medium" 
+                id="btn-add" style="--tilt: -0.6deg;" aria-label="Add">+</button>
+        
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium col-span-2 text-left pl-5 sm:pl-6" 
+                data-number="0" style="--tilt: -0.2deg;" aria-label="Zero">0</button>
+        <button type="button" class="btn rounded-xl text-lg sm:text-xl font-medium" 
+                data-number="." style="--tilt: 0.9deg;" aria-label="Decimal point">.</button>
+        <button type="button" class="btn btn-equals rounded-xl text-xl sm:text-2xl font-medium" 
+                id="btn-equals" style="--tilt: -0.5deg;" aria-label="Equals">=</button>
+        
+      </div>
+      
+      <!-- Footer note -->
+      <div class="text-center mt-3 text-xs sm:text-sm handwritten-note relative" style="z-index: 2;">
+        <span class="inline-block" style="transform: rotate(-1.5deg);">
+          ✧ pencil math · no eraser needed ✧
+        </span>
+        <span class="inline-block ml-2 opacity-40 text-base" aria-hidden="true">✏️</span>
+      </div>
+      
+    </main>
+  </div>
+</body>
+</html>
